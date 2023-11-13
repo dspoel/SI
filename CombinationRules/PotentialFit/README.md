@@ -22,7 +22,8 @@ quantum corrections.
 ```
 again, without the help flag the script will use the default level of theory.
 This script will fetch experimental data from the ../SecondVirial directory
-so please make sure that you generated those numbers before running this.
+so please make sure that you generated those numbers before running this. 
+To reproduce the data from the Kriz et al. paper, please add the -interpolate 3 flag.
 
 Auxiliary scripts
 =================
