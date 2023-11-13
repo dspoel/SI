@@ -132,7 +132,8 @@ def qm_mayer(pair:str, qmdata:list, T:float, debug:bool, reverse_mass:float, nin
     for ir in range(len(qmdata)):
         r = x[ir]
         U = y[ir]
-        print("Data pair %s r = %g U = %g beta*U = %g" % ( pair, r, U, beta*U ))
+        if B2debug:
+            print("Data pair %s r = %g U = %g beta*U = %g" % ( pair, r, U, beta*U ))
         mmm = [ -1, 0, 0, 0 ]
         if abs(beta*U) < 250:
             uexp = math.exp(-beta*U)
