@@ -29,3 +29,8 @@ Auxiliary scripts
 Some auxiliary scripts are available for plotting potentials (pot_plot.py), 
 and the performance of combination rules (plot_comb_rules.py). 
 Please have a look.
+
+Prerequisites
+=============
+The scripts need numpy, scipy, pandas, matplotlib as well as holoviews 
+libraries to run.
