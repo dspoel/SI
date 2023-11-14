@@ -2,11 +2,9 @@
 
 import math, os
 import numpy as np
+from calc_virials import Boltz, Bohr, Hartree
 
 debug   = False
-Bohr    = 0.529177
-Hartree = 2625.5 
-Boltz   = 0.008314
 
 def faculty(k:int)->int:
     if 0 == k:

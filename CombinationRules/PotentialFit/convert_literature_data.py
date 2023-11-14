@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import os, sys
-from calc_b2 import Boltz, Bohr, Hartree
+from calc_virials import Boltz, Bohr, Hartree
 
 CM1 = 0.0119627
 
