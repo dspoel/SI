@@ -2,7 +2,7 @@
 
 import math, os
 import numpy as np
-from calc_virials import Boltz, Bohr, Hartree
+from constants import Boltz, Bohr, Hartree
 
 debug   = False
 

@@ -2,19 +2,12 @@
 
 import argparse, math, os, sys
 from lmwei2017 import Uwei, get_table1
+from constants import *
 from fit_script import LJ_14_7, WBH, MRS, TT, GBH, LJ_12_6, LJ_8_6, get_potentials, pol_string
 import numpy as np
 from scipy.interpolate import CubicSpline
 
 B2debug      = False
-Bohr         = 0.529177
-Hartree      = 2625.5 
-Boltz        = 8.314462618e-3
-SpeedOfLight = 2.99792458e5 # nm/ps
-AVOGADRO     = 6.02214076e23
-PLANCK1      = 6.62606957e-34 # J s, NIST 2010 CODATA
-PLANCK       = PLANCK1*AVOGADRO*1e9 # (kJ/mol) ps
-hbar         = PLANCK/(2*math.pi)
 
 b2map = { "He-Ne": "helium#neon",
           "He-Ar": "helium#argon",
@@ -242,7 +235,6 @@ def latexit(name:str)->str:
 def calc_b2(table:dict, args, resultdir:str, suffix:str):
     qmdict     = read_qm(args.lot, args.elements, args.qmcut)
     # TODO check masses
-    mass       = { "He": 4.002602, "Ne": 20.1797, "Ar": 39.948, "Kr": 83.798, "Xe": 131.293 }
     rmse       = {}
     lots = { "CCSDT_CBS": "CCSD(T)/CBS", "CCSDTQ_CBS": "CCSDT(Q)/CBS", "SAPT_CBS_a_3.8": "SAPT/CBS", "SAPT_TZ": "SAPT/TZ", "SAPT_QZ": "SAPT/QZ", "CCSDT_TZ": "CCSDT/TZ", "CCSDT_QZ": "CCSDT/QZ" }
     if args.lot in lots:
