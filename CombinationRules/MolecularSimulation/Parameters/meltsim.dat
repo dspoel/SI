@@ -6,7 +6,6 @@
 dt                 = 0.004*picoseconds
 equilibrationSteps = 0
 steps              = 250000
-vanderwaals = LJ12_6 # variable, other options: LJ14_7 or WBH or GBHAM
 drudeMass = 0.1
 maxDrudeDistance = 0
 saveDcd = 1000

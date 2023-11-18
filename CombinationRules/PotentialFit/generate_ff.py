@@ -24,8 +24,7 @@ def parse_args():
 
 def print_ff(table:dict, outfn:str, pot:str):
     with open(outfn, "w") as outf:
-        outf.write("""
-<?xml version="1.0" encoding="ISO-8859-1"?>
+        outf.write("""<?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE ForceField.dtd PUBLIC "ForceField.dtd" "ForceField.dtd">
 <ForceField>
   <AtomTypes>
@@ -45,14 +44,27 @@ def print_ff(table:dict, outfn:str, pot:str):
         outf.write("  </Residues>\n")
         outf.write("  <CustomNonbondedForce energy=\"0\" bondCutoff=\"3\">\n")
         outf.write("    <UseAttributeFromResidue name=\"charge\"/>\n")
+        sigeps = [ "sigma", "epsilon" ]
+        for se in sigeps:
+            if se in table[elems["Xe"]]:
+                outf.write("      <PerParticleParameter name=\"%s\"/>\n" % se)
         for param in table[elems["Xe"]]:
-            outf.write("      <PerParticleParameter name=\"%s\"/>\n" % param)
+            if not param in sigeps:
+                outf.write("      <PerParticleParameter name=\"%s\"/>\n" % param)
+        outf.write("      <PerParticleParameter name=\"charge\"/>\n")
         outf.write("      <PerParticleParameter name=\"zeta\"/>\n")
         for elem in elems.keys():
             outf.write("      <Atom type=\"%s\"" % elem)
             pair = elems[elem]
+            for param in sigeps:
+                fac = 1
+                if "sigma" == param:
+                    fac = 0.1
+                if param in table[pair]:
+                    outf.write(" %s=\"%g\"" % ( param, table[pair][param]*fac ))
             for param in table[pair]:
-                outf.write(" %s=\"%g\"" % ( param, table[pair][param] ))
+                if not param in sigeps:
+                    outf.write(" %s=\"%g\"" % ( param, table[pair][param] ))
             outf.write(" zeta=\"13\"/>\n")
         outf.write("  </CustomNonbondedForce>\n")
         outf.write("  <NonbondedForce coulomb14scale=\"1\" lj14scale=\"1\" energy=\"0\" bondCutoff=\"3\">\n")
@@ -63,7 +75,7 @@ def print_ff(table:dict, outfn:str, pot:str):
             sigma   = table[pair]["sigma"]
             if pot in [ "GBH", "WBH", "LJ_14_7", "LJ_8_6" ]:
                 sigma /= 2**(1.0/6.0)
-            outf.write("      <Atom type=\"%s\" sigma=\"%g\" epsilon=\"%g\"/>\n" % ( elem, sigma, epsilon ))
+            outf.write("      <Atom type=\"%s\" sigma=\"%g\" epsilon=\"%g\"/>\n" % ( elem, sigma*0.1, epsilon ))
         outf.write("  </NonbondedForce>\n")
         outf.write("</ForceField>\n")
 
@@ -71,6 +83,8 @@ if __name__ == "__main__":
     args       = parse_args()
     resultsdir = ( "RESULTS_%s_%d_%g" % ( args.lot, args.upper, args.lower ))
     table, comb = read_fit_table(("%s/%s.csv" % (resultsdir, args.pot)))
-    outfn       = ( "%s/ff_%s.xml" % ( resultsdir, args.pot ) ) 
+    pot2OpenMM  = { "LJ_12_6": "LJ12_6", "LJ_8_6": "LJ8_6", "LJ_14_7": "LJ14_7",
+                    "WBH": "WBH", "GBH": "GBHAM" }
+    outfn       = ( "%s/ff_%s.xml" % ( resultsdir, pot2OpenMM[args.pot] ) ) 
     print_ff(table, outfn, args.pot)
     print("Generated force field file %s" % outfn)

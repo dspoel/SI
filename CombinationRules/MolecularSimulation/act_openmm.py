@@ -217,6 +217,7 @@ class ActOpenMMSim:
         self.txtfile     = txtfile
         self.dcdtraj     = dcdtraj
         self.pdbtraj     = pdbtraj
+        self.txt         = None
         self.emonomer    = emonomer
         self.debug = debug
         if self.debug:
@@ -248,7 +249,6 @@ class ActOpenMMSim:
                 self.xmlfile = xmlfile
         else:
             sys.exit("Please pass an ACT (actfile) or OpenMM force field file (xmlfile) using the optional arguments")
-        self.txt         = None
         self.pdb         = PDBFile(self.pdbfile)
         self.sim_params  = SimParams(self.datfile)
         self.comb        = CombinationRules(self.sim_params.getStr("charge_distribution"),
@@ -270,7 +270,6 @@ class ActOpenMMSim:
                 print("DCD trajectory is in %s" % self.dcdtraj )
             if None != self.pdbtraj:
                 print("PDB trajectory in %s" % self.pdbtraj )
-        else:
             self.txt.close()
         
     def txt_header(self):
