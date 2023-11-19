@@ -8,6 +8,6 @@ Before doing so, you need to generate a force field file in the
 PotentialFit directory and copy it here. Then, please run
 
 ```
-./run_one_simulation.py -h
+./run_simulations.py -h
 ```
 please check the output and the script itself.
