@@ -31,7 +31,9 @@ def print_ff(table:dict, outfn:str, pot:str):
 """)
         elems = {}
         for pair in table.keys():
-            elems[(pair.split("-")[0])] = pair
+            ppp = pair.split("-")
+            if ppp[0] == ppp[1]:
+                elems[ppp[0]] = pair
         for elem in elems:
             outf.write("    <Type name=\"%s\" class=\"%s\" element=\"%s\" mass=\"%g\"/>\n" %
                        ( elem, elem, elem, mass[elem]) )
