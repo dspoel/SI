@@ -134,7 +134,7 @@ def pol_string(pol:bool):
         return ""
 
 def latexit(name:str)->str:
-    return name.replace("_", "\_")
+    return name.replace("_", "\\_")
     
 #RMSE calculator
 def RMSE(function, x, y, params:dict)->float:
@@ -482,7 +482,7 @@ def save_tex_pot(potentials:dict, myfit:dict, noble:list, workdir:str, comb_df_b
                     texfit.write(f" &")
                 rmse = compute_rms(count[cf])
                 texfit.write(" & %.4f\\\\\n" % rmse)
-        texfit.write("\\hline\n\\end{tabular}\n\end{table}\n")
+        texfit.write("\\hline\n\\end{tabular}\n\\end{table}\n")
         texfit.close()
 
 def save_csv_pot(potentials:dict, myfit:dict, noble:list, workdir:str, comb_df_best:dict):
@@ -591,7 +591,7 @@ def save_table3(potentials:dict, myfit:dict, noble:list, mylot:str, workdir:str,
             outf.write("&%s" % potentials[k]["latex"])
         outf.write("\\\\\n\n")
         nrow = 5
-        outf.write("\multirow{%d}{%s}{Eq.}" % ( nrow, width ))
+        outf.write("\\multirow{%d}{%s}{Eq.}" % ( nrow, width ))
         for pot in potentials.keys():
             bestrule = comb_df_best[pot]["rule"]
             myrule   = potentials[pot]["df"]["rule"][bestrule]
@@ -640,7 +640,7 @@ def save_table_treshold(potentials:dict, rmsepot:dict, mylot:str, workdir:str, a
             for i in range(len(potentials[pot]["label"])):
                 if potentials[pot]["label"][i] in myrule:
                     outf.write(" %s" % ( potentials[pot]["texlabel"][i] ))
-        outf.write("\\\\\n\\hline\n&\multicolumn{%d}{c}{Treshold %g kJ/mol}\\\\\n" % ( len(potentials.keys()), args.upper ))
+        outf.write("\\\\\n\\hline\n&\\multicolumn{%d}{c}{Treshold %g kJ/mol}\\\\\n" % ( len(potentials.keys()), args.upper ))
         outf.write("RMSE fit")
         for pot in potentials.keys():
             outf.write("&%.3f" % ( rmsepot[pot] ))
@@ -665,41 +665,41 @@ def get_potentials()->dict:
     sigmin = 2 # Angstrom
     sigmax = 20 # Angstrom
     potentials = { "LJ_12_6": { "name": "Lennard-Jones 12-6", "latex": "LJ12-6",
-                                "label": [ "epsilon", "sigma" ], "unit": [ "kJ/mol", "{\AA}" ],
-                                "texlabel": [ "$\epsilon$", "$\sigma$" ], 
+                                "label": [ "epsilon", "sigma" ], "unit": [ "kJ/mol", "{\\AA}" ],
+                                "texlabel": [ "$\\epsilon$", "$\\sigma$" ], 
                                 "min": [epsmin, sigmin], "max": [epsmax, sigmax] },
                    "LJ_8_6":  { "name": "Lennard-Jones 8-6", "latex": "LJ8-6",
-                                "label": [ "epsilon", "sigma" ], "unit": [ "kJ/mol", "{\AA}" ],
-                                "texlabel": [ "$\epsilon$", "$\sigma$" ], 
+                                "label": [ "epsilon", "sigma" ], "unit": [ "kJ/mol", "{\\AA}" ],
+                                "texlabel": [ "$\\epsilon$", "$\\sigma$" ], 
                                 "min": [epsmin, sigmin],          "max": [epsmax, 12*sigmax] },
                    "WBH":     { "name": "Wang-Buckingham", "latex": "WBH",
-                                "label": [ "epsilon", "sigma", "gamma" ], "unit": [ "kJ/mol", "{\AA}", "-" ],
-                                "texlabel": [ "$\epsilon$", "$\sigma$", "$\gamma$" ], 
+                                "label": [ "epsilon", "sigma", "gamma" ], "unit": [ "kJ/mol", "{\\AA}", "-" ],
+                                "texlabel": [ "$\\epsilon$", "$\\sigma$", "$\\gamma$" ], 
                                 "min": [epsmin, sigmin, 6],      "max": [epsmax, sigmax, 40] },
                    "MBH":     { "name": "modified Buckingham", "latex": "MBH",
-                                "label": [ "epsilon", "sigma", "gamma" ], "unit": [ "kJ/mol", "{\AA}", "-" ],
-                                "texlabel": [ "$\epsilon$", "$\sigma$", "$\gamma$" ], 
+                                "label": [ "epsilon", "sigma", "gamma" ], "unit": [ "kJ/mol", "{\\AA}", "-" ],
+                                "texlabel": [ "$\\epsilon$", "$\\sigma$", "$\\gamma$" ], 
                                 "min": [epsmin, sigmin, 6],      "max": [epsmax, sigmax, 30] },
                    "MRS":     { "name": "Morse", "latex": "MRS",
-                                "label": [ "epsilon", "sigma", "gamma" ], "unit": [ "kJ/mol", "{\AA}", "1/{\AA}" ],
-                                "texlabel": [ "$\epsilon$", "$\sigma$", "$\gamma$" ], 
+                                "label": [ "epsilon", "sigma", "gamma" ], "unit": [ "kJ/mol", "{\\AA}", "1/{\\AA}" ],
+                                "texlabel": [ "$\\epsilon$", "$\\sigma$", "$\\gamma$" ], 
                                 "min": [epsmin, sigmin, 1],       "max": [epsmax, sigmax, 4]  },
                    "BHA":     { "name": "Buckingham", "latex": "BHA",
-                                "label": [ "epsilon", "sigma", "gamma" ], "unit": [ "kJ/mol", "kJ/mol {\AA}$^6$", "1/{\AA}" ],
+                                "label": [ "epsilon", "sigma", "gamma" ], "unit": [ "kJ/mol", "kJ/mol {\\AA}$^6$", "1/{\\AA}" ],
                                 "texlabel": [ "A", "C$_6$", "b" ],
                                 "min": [3e4, 100, 2 ],           "max": [2e6, 35000, 6 ] },
                    "GBH":     { "name": "generalized Buckingham", "latex": "GBH",
-                                "label": [ "epsilon", "sigma", "gamma", "delta" ], "unit": [ "kJ/mol", "{\AA}", "-", "-" ],
-                                "texlabel": [ "$\epsilon$", "$\sigma$", "$\gamma$", "$\delta$" ], 
+                                "label": [ "epsilon", "sigma", "gamma", "delta" ], "unit": [ "kJ/mol", "{\\AA}", "-", "-" ],
+                                "texlabel": [ "$\\epsilon$", "$\\sigma$", "$\\gamma$", "$\\delta$" ], 
                                 "min": [epsmin, sigmin, 10,  0], "max": [epsmax, sigmax, 50, 40] },
                    "LJ_14_7": { "name": "Buffered 14-7", "latex": "LJ14-7",
-                                "label": [ "epsilon", "sigma", "gamma", "delta" ], "unit": [ "kJ/mol", "{\AA}", "-", "-" ],
-                                "texlabel": [ "$\epsilon$", "$\sigma$", "$\gamma$", "$\delta$" ], 
+                                "label": [ "epsilon", "sigma", "gamma", "delta" ], "unit": [ "kJ/mol", "{\\AA}", "-", "-" ],
+                                "texlabel": [ "$\\epsilon$", "$\\sigma$", "$\\gamma$", "$\\delta$" ], 
                                 "min": [epsmin, sigmin, 0,  0],   "max": [epsmax, sigmax, 0.8, 2] },
                    "TT":      { "name": "Tang-Toennies", "latex": "TT",
                                 "label": [ "A", "b", "C6", "C8", "C10", "Re", "De" ], 
                                 "texlabel": [ "A", "b", "C$_6$", "C$_8$", "C$_{10}$", "Re", "De"  ], 
-                                "unit": [ "-", "-", "-", "-", "-", "{\AA}", "kJ/mol" ],
+                                "unit": [ "-", "-", "-", "-", "-", "{\\AA}", "kJ/mol" ],
                                 "min": [2e5, 8, 0.0, 0.0, 0.0, 0, 0], "max": [1e6, 20, 5, 4, 8, 0, 0] }
                 }
     return potentials
